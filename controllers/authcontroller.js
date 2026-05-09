@@ -1,12 +1,9 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-// Helper to generate JWT
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
 };
-
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -28,7 +25,6 @@ const registerUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -47,5 +43,4 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
 module.exports = { registerUser, loginUser };
