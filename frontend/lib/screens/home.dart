@@ -2,6 +2,7 @@
 import 'ai.dart';
 import 'dart:ui';
 import 'safety.dart';
+import 'chat.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -452,6 +453,12 @@ Widget _buildHeader() {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (_) => const Safety()),
+              );
+            }
+            if (title == "Family Chat") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const Chat()),
               );
             }
           },

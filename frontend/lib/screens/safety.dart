@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: unused_field, deprecated_member_use
 import 'ai.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -340,7 +340,7 @@ bool _sosActive = false;
                   ),
                   const Divider(),
                   _buildContactRow(
-                    "James Usra",
+                    "James Howard",
                     "Spouse • Emergency Admin",
                   ),
                 ],

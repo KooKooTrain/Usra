@@ -1,94 +1,22 @@
-// ignore_for_file: unused_field, prefer_const_constructors, prefer_final_fields, file_names, deprecated_member_use, unnecessary_import
+// ignore_for_file: prefer_final_fields, deprecated_member_use
 
 import 'dart:ui';
-import '../secrets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
 import 'home.dart';
+import 'AI.dart';
 
-class AiPage extends StatefulWidget {
-  const AiPage({super.key});
+class Chat extends StatefulWidget {
+  const Chat({super.key});
 
   @override
-  State<AiPage> createState() => _AiPageState();
+  State<Chat> createState() => _ChatPageState();
 }
 
-class _AiPageState extends State<AiPage> {
+class _ChatPageState extends State<Chat> {
   bool _isSidebarOpen = false;
-  int _currentIndex = 1;
+  int _currentIndex = 2;
 
   final Color _brandBlue = const Color(0xFF0056D2);
-  final Color _actionIconColor =
-      const Color(0xFF0056D2).withOpacity(0.7);
-
-  final TextEditingController _controller = TextEditingController();
-
-  late final GenerativeModel _model;
-  late final ChatSession _chat;
-
-  bool _isTyping = false;
-
-  final List<Map<String, String>> _messages = [
-    {
-      "role": "ai",
-      "content": "Hello! I'm Usra AI. How can I help your family today?"
-    }
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-
-    _model = GenerativeModel(
-      model: 'gemini-3.1-flash-lite',
-      apiKey: api,
-    );
-
-    _chat = _model.startChat();
-  }
-
-  Future<void> _sendMessage() async {
-    final text = _controller.text.trim();
-
-    if (text.isEmpty) return;
-
-    setState(() {
-      _messages.add({
-        "role": "user",
-        "content": text,
-      });
-
-      _isTyping = true;
-    });
-
-    _controller.clear();
-
-    try {
-      final response = await _chat.sendMessage(
-        Content.text(text),
-      );
-
-      final reply = response.text;
-
-      setState(() {
-      _messages.add({
-        "role": "ai",
-        "content": reply ?? "Empty response from AI",
-      });
-      });
-    } catch (e) {
-      setState(() {
-        _messages.add({
-          "role": "ai",
-          "content": "ERROR: $e",
-        });
-      });
-    }
-
-    setState(() {
-      _isTyping = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +31,7 @@ class _AiPageState extends State<AiPage> {
             colors: [
               Color(0xFFD6E4FF),
               Color(0xFFF0E5FF),
-              Color(0xFFE8F0FF)
+              Color(0xFFE8F0FF),
             ],
           ),
         ),
@@ -130,16 +58,22 @@ class _AiPageState extends State<AiPage> {
             color: Colors.black.withOpacity(0.2),
             blurRadius: 30,
             spreadRadius: 5,
-          )
+          ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(32),
         child: Stack(
           children: [
-            _buildInnerPageBackground(),
-            _buildChatInterface(),
+            _buildInnerBackground(),
+
+            // YOUR PAGE CONTENT HERE
+            _buildChatContent(),
+
+            // HEADER
             _buildHeader(),
+
+            // BOTTOM NAV
             Positioned(
               bottom: 0,
               left: 0,
@@ -147,15 +81,18 @@ class _AiPageState extends State<AiPage> {
               child: _buildBottomNav(),
             ),
 
+            // SIDEBAR OVERLAY
             if (_isSidebarOpen)
               GestureDetector(
-                onTap: () => setState(() => _isSidebarOpen = false),
+                onTap: () =>
+                    setState(() => _isSidebarOpen = false),
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   color: Colors.black.withOpacity(0.4),
                 ),
               ),
 
+            // SIDEBAR
             AnimatedPositioned(
               duration: const Duration(milliseconds: 500),
               curve: Curves.fastLinearToSlowEaseIn,
@@ -170,208 +107,225 @@ class _AiPageState extends State<AiPage> {
     );
   }
 
-  Widget _buildInnerPageBackground() {
+  Widget _buildInnerBackground() {
     return Container(
       width: double.infinity,
       height: double.infinity,
       decoration: const BoxDecoration(
         color: Color(0xFFF8FAFF),
         gradient: RadialGradient(
-          center: Alignment(0.8, -0.5),
-          radius: 1.5,
+          center: Alignment(-0.8, -0.6),
+          radius: 1.2,
           colors: [
-            Color(0xFFF3E8FF),
+            Color(0xFFE8F0FF),
             Color(0xFFFDFBFF),
-            Color(0xFFE8F0FF)
+            Color(0xFFF3E8FF),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildChatInterface() {
+  Widget _buildChatContent() {
     return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(height: 80),
-
-          Container(
-            height: 190,
-            width: 190,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: ClipOval(
-              child: Image.network(
-                "https://res.cloudinary.com/dw4mv7p40/image/upload/fl_animated/blob_final_vsfnto.gif", //https://res.cloudinary.com/dw4mv7p40/image/upload/v1778572104/blob_final_vsfnto.gif
-                fit: BoxFit.cover,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 90,
+          left: 20,
+          right: 20,
+          bottom: 120,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Family Chat",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
               ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 8),
 
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
+            const Text(
+              "Stay connected with your family.",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
               ),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final msg = _messages[index];
-
-                return _buildChatBubble(
-                  msg['content']!,
-                  msg['role'] == 'ai',
-                );
-              },
             ),
-          ),
 
-          if (_isTyping)
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                bottom: 10,
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Usra AI is typing...",
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: 12,
+            const SizedBox(height: 25),
+
+            Expanded(
+              child: ListView(
+                children: [
+                  _buildChatTile(
+                    "Mom",
+                    "Did everyone eat lunch?",
+                    "2m ago",
+                    true,
                   ),
-                ),
+
+                  _buildChatTile(
+                    "Dad",
+                    "I'll be home by 7.",
+                    "12m ago",
+                    false,
+                  ),
+
+                  _buildChatTile(
+                    "Aisha",
+                    "Can someone pick me up?",
+                    "25m ago",
+                    true,
+                  ),
+
+                  _buildChatTile(
+                    "Family Group",
+                    "Movie night today 🍿",
+                    "1h ago",
+                    false,
+                  ),
+                ],
               ),
             ),
 
-          _buildTextInputField(),
+            const SizedBox(height: 10),
 
-          const SizedBox(height: 110),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildChatBubble(String text, bool isAi) {
-    return Align(
-      alignment:
-          isAi ? Alignment.centerLeft : Alignment.centerRight,
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
-        ),
-        constraints: const BoxConstraints(maxWidth: 240),
-        decoration: BoxDecoration(
-          color: isAi ? Colors.white : _brandBlue,
-          borderRadius: BorderRadius.circular(20).copyWith(
-            bottomLeft: isAi
-                ? const Radius.circular(0)
-                : const Radius.circular(20),
-            bottomRight: isAi
-                ? const Radius.circular(20)
-                : const Radius.circular(0),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-            )
-          ],
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isAi ? Colors.black87 : Colors.white,
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTextInputField() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8,
-        vertical: 8,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.9),
-        borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.white),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 20,
-          )
-        ],
-      ),
-      child: Row(
-        children: [
-          const SizedBox(width: 12),
-
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                hintText: "Ask Usra anything...",
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black26,
-                ),
-                border: InputBorder.none,
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
               ),
-            ),
-          ),
-
-          TweenAnimationBuilder<double>(
-            tween: Tween(begin: 0.95, end: 1.05),
-            duration: const Duration(milliseconds: 1200),
-            curve: Curves.easeInOut,
-            builder: (context, scale, child) {
-              return Transform.scale(
-                scale: scale,
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: _sendMessage,
-                    child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        colors: [
-                          _brandBlue,
-                          const Color(0xFF6EA8FF),
-                        ],
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.75),
+                borderRadius: BorderRadius.circular(22),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Message family...",
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: _brandBlue.withOpacity(0.45),
-                          blurRadius: 20,
-                          spreadRadius: 2,
-                        ),
-                      ],
+                    ),
+                  ),
+
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: _brandBlue,
+                      shape: BoxShape.circle,
                     ),
                     child: const Icon(
-                      Icons.arrow_upward_rounded,
+                      Icons.send_rounded,
                       color: Colors.white,
                       size: 20,
                     ),
                   ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChatTile(
+    String name,
+    String message,
+    String time,
+    bool unread,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 14),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 12,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 26,
+            backgroundColor: _brandBlue.withOpacity(0.15),
+            child: Text(
+              name[0],
+              style: TextStyle(
+                color: _brandBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 14),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
                 ),
-              ));
-            },
-            onEnd: () {
-              setState(() {});
-            },
+
+                const SizedBox(height: 4),
+
+                Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontSize: 13,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                time,
+                style: const TextStyle(
+                  color: Colors.black38,
+                  fontSize: 11,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              if (unread)
+                Container(
+                  width: 10,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: _brandBlue,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+            ],
           ),
         ],
       ),
@@ -519,6 +473,13 @@ class _AiPageState extends State<AiPage> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => const HomePage(),
+                  ),
+                );
+              } else if (index == 1) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AiPage(),
                   ),
                 );
               }
