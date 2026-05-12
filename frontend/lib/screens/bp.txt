@@ -1,0 +1,507 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ui';
+import 'package:flutter/material.dart';
+
+class BoilerplatePage extends StatefulWidget {
+  const BoilerplatePage({super.key});
+
+  @override
+  State<BoilerplatePage> createState() => _BoilerplatePageState();
+}
+
+class _BoilerplatePageState extends State<BoilerplatePage> {
+  bool _isSidebarOpen = false;
+  int _currentIndex = 0;
+
+  final Color _brandBlue = const Color(0xFF0056D2);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFFD6E4FF),
+              Color(0xFFF0E5FF),
+              Color(0xFFE8F0FF),
+            ],
+          ),
+        ),
+        child: Center(
+          child: _buildPhoneFrame(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPhoneFrame() {
+    return Container(
+      width: 360,
+      height: 740,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        borderRadius: BorderRadius.circular(40),
+        border: Border.all(
+          color: const Color(0xFF2C2C2C),
+          width: 8,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 30,
+            spreadRadius: 5,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(32),
+        child: Stack(
+          children: [
+            _buildInnerBackground(),
+
+            // YOUR PAGE CONTENT HERE
+            _buildPageContent(),
+
+            // HEADER
+            _buildHeader(),
+
+            // BOTTOM NAV
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _buildBottomNav(),
+            ),
+
+            // SIDEBAR OVERLAY
+            if (_isSidebarOpen)
+              GestureDetector(
+                onTap: () =>
+                    setState(() => _isSidebarOpen = false),
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  color: Colors.black.withOpacity(0.4),
+                ),
+              ),
+
+            // SIDEBAR
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.fastLinearToSlowEaseIn,
+              left: _isSidebarOpen ? 0 : -300,
+              top: 0,
+              bottom: 0,
+              child: _buildSidebar(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInnerBackground() {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: const BoxDecoration(
+        color: Color(0xFFF8FAFF),
+        gradient: RadialGradient(
+          center: Alignment(-0.8, -0.6),
+          radius: 1.2,
+          colors: [
+            Color(0xFFE8F0FF),
+            Color(0xFFFDFBFF),
+            Color(0xFFF3E8FF),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPageContent() {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 90,
+          left: 20,
+          right: 20,
+          bottom: 120,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              "Your Page",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+
+            SizedBox(height: 12),
+
+            Text(
+              "Start building here.",
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10,
+          vertical: 10,
+        ),
+        child: SafeArea(
+          bottom: false,
+          child: Row(
+            mainAxisAlignment:
+                MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.menu_rounded,
+                  color: _brandBlue,
+                  size: 28,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isSidebarOpen = true;
+                  });
+                },
+              ),
+
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color:
+                            _brandBlue.withOpacity(0.1),
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.share_outlined,
+                      color: _brandBlue,
+                      size: 20,
+                    ),
+                  ),
+
+                  const SizedBox(width: 10),
+
+                  Text(
+                    "Usra أسرة",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: _brandBlue,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(width: 48),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBottomNav() {
+    return Container(
+      height: 75,
+      margin: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+        bottom: 25,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.85),
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 20,
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 8,
+            sigmaY: 8,
+          ),
+          child: Row(
+            mainAxisAlignment:
+                MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavItem(
+                Icons.home_filled,
+                "Home",
+                0,
+              ),
+              _buildNavItem(
+                Icons.auto_awesome_rounded,
+                "AI",
+                1,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(
+    IconData icon,
+    String label,
+    int index,
+  ) {
+    final isActive = _currentIndex == index;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _currentIndex = index;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 24,
+          vertical: 10,
+        ),
+        decoration: BoxDecoration(
+          color: isActive
+              ? _brandBlue.withOpacity(0.18)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color:
+                  isActive ? _brandBlue : Colors.black26,
+              size: 24,
+            ),
+
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+                color: isActive
+                    ? _brandBlue
+                    : Colors.black26,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSidebar() {
+    return Container(
+      width: 290,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.94),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 12,
+            sigmaY: 12,
+          ),
+          child: Column(
+            children: [
+              _buildSidebarHeader(),
+
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  children: [
+                    _sidebarTile(
+                      Icons.home_rounded,
+                      "Home",
+                    ),
+                    _sidebarTile(
+                      Icons.auto_awesome_rounded,
+                      "AI Assistant",
+                    ),
+                    _sidebarTile(
+                      Icons.settings_rounded,
+                      "Settings",
+                    ),
+                  ],
+                ),
+              ),
+
+              _buildSignOutButton(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSidebarHeader() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(
+        24,
+        65,
+        24,
+        30,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 56,
+            width: 56,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  _brandBlue,
+                  const Color(0xFF5A8DFF),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Icon(
+              Icons.blur_on_rounded,
+              color: Colors.white,
+              size: 36,
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          const Text(
+            "USRA",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 2.8,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _sidebarTile(
+    IconData icon,
+    String title,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: ListTile(
+        dense: true,
+        leading: Icon(
+          icon,
+          color: Colors.black54,
+          size: 22,
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSignOutButton() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        20,
+        10,
+        20,
+        40,
+      ),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(18),
+        ),
+        child: const Row(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.logout_rounded,
+              color: Colors.white,
+              size: 18,
+            ),
+
+            SizedBox(width: 12),
+
+            Text(
+              "Sign Out",
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w800,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

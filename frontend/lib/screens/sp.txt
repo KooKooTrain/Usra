@@ -1,0 +1,315 @@
+  Widget _buildSafetyContent() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(
+          top: 90,
+          bottom: 120,
+        ),
+        child: Column(
+          children: [
+            _buildGlassCard(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFD32F2F),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                        )
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.warning_amber_rounded,
+                      color: Colors.white,
+                      size: 45,
+                    ),
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  const Text(
+                    "SOS",
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                      color: Color(0xFFD32F2F),
+                    ),
+                  ),
+
+                  const Text(
+                    "Hold for 3 seconds to alert all family members and local services.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            _buildGlassCard(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.zero,
+              child: Column(
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius:
+                            const BorderRadius.vertical(
+                          top: Radius.circular(24),
+                        ),
+                        child: Image.network(
+                          'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800&q=80',
+                          height: 160,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+
+                      const Icon(
+                        Icons.radar,
+                        color: Color(0xFFE1BEE7),
+                        size: 120,
+                      ),
+                    ],
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Safe Zone",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        Text(
+                          "Current Location: Downtown Hub",
+                          style: TextStyle(
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildSmallCard(
+                      "HEALTH PASS",
+                      "Blood: O+\nAllergy:\nPenicillin",
+                      Icons.medical_services_outlined,
+                    ),
+                  ),
+
+                  const SizedBox(width: 15),
+
+                  Expanded(
+                    child: _buildSmallCard(
+                      "USRA SHIELD",
+                      "All members secured.",
+                      Icons.shield_outlined,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            _buildGlassCard(
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "EMERGENCY CONTACTS",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Colors.black54,
+                        ),
+                      ),
+
+                      Icon(
+                        Icons.add_circle,
+                        color: Color(0xFF1E88E5),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 15),
+
+                  _buildContactRow(
+                    "Dr. Sarah Chen",
+                    "Primary Physician",
+                  ),
+
+                  const Divider(),
+
+                  _buildContactRow(
+                    "James Usra",
+                    "Spouse • Emergency Admin",
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGlassCard({
+    required Widget child,
+    EdgeInsets? padding,
+    EdgeInsets? margin,
+  }) {
+    return Container(
+      margin: margin,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 10,
+            sigmaY: 10,
+          ),
+          child: Container(
+            padding:
+                padding ?? const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(
+                color: Colors.white.withOpacity(0.3),
+              ),
+            ),
+            child: child,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmallCard(
+    String title,
+    String subtitle,
+    IconData icon,
+  ) {
+    return _buildGlassCard(
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.start,
+        children: [
+          Icon(
+            icon,
+            color: Colors.brown[300],
+            size: 28,
+          ),
+
+          const SizedBox(height: 10),
+
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
+
+          const SizedBox(height: 4),
+
+          Text(
+            subtitle,
+            style: const TextStyle(
+              fontSize: 11,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContactRow(
+    String name,
+    String desc,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          const CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.teal,
+          ),
+
+          const SizedBox(width: 12),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment:
+                  CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                Text(
+                  desc,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.call_outlined,
+              color: Colors.blue,
+            ),
+          ),
+        ],
+      ),
+    );
+  }

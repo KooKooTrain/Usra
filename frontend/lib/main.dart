@@ -1,5 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
+import 'screens/signup.dart';
+import 'screens/home.dart';
 
 void main() {
   runApp(const Usra());
@@ -14,10 +18,15 @@ class Usra extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Usra App',
       theme: ThemeData(
-        fontFamily: 'SF Pro Display', 
+        fontFamily: 'SF Pro Display',
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home: const SignupPage(),
+      routes: {
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
+        '/home': (context) => const HomePage(),
+      },
     );
   }
 }

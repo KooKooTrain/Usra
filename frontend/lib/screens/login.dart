@@ -1,7 +1,8 @@
 // ignore_for_file: deprecated_member_use
-
+import 'home.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -131,8 +132,10 @@ class _LoginPageState extends State<LoginPage> {
                                         Padding(
                                           padding: EdgeInsets.symmetric(horizontal: 10),
                                           child: Text("or sign in with biometric", style: TextStyle(color: Colors.black38, fontSize: 12)),
+                                          
                                         ),
                                         Expanded(child: Divider(color: Colors.black12)),
+                                        
                                       ],
                                     ),
                                     const SizedBox(height: 20),
@@ -145,7 +148,33 @@ class _LoginPageState extends State<LoginPage> {
                                       ],
                                     ),
                                     const SizedBox(height: 25),
-                                    const Center(child: Text("New to Usra? Join Family", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w500, fontSize: 13))),
+                                    Center(
+                                      child: MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: GestureDetector(
+                                          onTap: () => Navigator.pushNamed(context, '/signup'),
+                                          child: RichText(
+                                            text: const TextSpan(
+                                              text: "New to Usra? ",
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 13,
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text: "Join Family",
+                                                  style: TextStyle(
+                                                    color: Color(0xFF0056D2),
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -216,19 +245,31 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSignInButton() {
     return Container(
-      width: double.infinity, height: 50,
+      width: double.infinity,
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         gradient: const LinearGradient(colors: [Color(0xFF005DC7), Color(0xFF1E88E5)]),
       ),
       child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
+        // Navigation logic added here
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent, 
+          shadowColor: Colors.transparent, 
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Sign In", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
-            SizedBox(width: 8), Icon(Icons.arrow_forward, color: Colors.white, size: 18),
+            SizedBox(width: 8), 
+            Icon(Icons.arrow_forward, color: Colors.white, size: 18),
           ],
         ),
       ),
