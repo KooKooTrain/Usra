@@ -313,3 +313,242 @@
       ),
     );
   }
+
+
+
+
+
+
+  Widget _buildBottomNav() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18), 
+        child: Container(
+          height: 75,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.45), 
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.25), 
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 25,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildPremiumNavItem(
+                Icons.home_filled,
+                "Home",
+                _currentIndex == 0,
+                0,
+              ),
+              _buildPremiumNavItem(
+                Icons.auto_awesome_rounded,
+                "AI Assistant",
+                _currentIndex == 1,
+                1,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+  Widget _buildPremiumNavItem(
+    IconData icon,
+    String label,
+    bool isActive,
+    int index,
+  ) {
+    bool isHovered = false;
+
+    return StatefulBuilder(
+      builder: (context, setNavState) {
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) =>
+              setNavState(() => isHovered = true),
+          onExit: (_) =>
+              setNavState(() => isHovered = false),
+          child: GestureDetector(
+            onTap: () {
+              if (index == 0) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const HomePage(),
+                  ),
+                );
+              } else if (index == 1) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AiPage(),
+                  ),
+                );
+              }
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 10,
+              ),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? _brandBlue.withOpacity(0.18)
+                    : isHovered
+                        ? _brandBlue.withOpacity(0.08)
+                        : Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    icon,
+                    color: isActive
+                        ? _brandBlue
+                        : isHovered
+                            ? _brandBlue.withOpacity(0.8)
+                            : Colors.black26,
+                    size: 24,
+                  ),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: isActive
+                          ? FontWeight.w900
+                          : FontWeight.bold,
+                      color: isActive
+                          ? _brandBlue
+                          : isHovered
+                              ? _brandBlue.withOpacity(0.8)
+                              : Colors.black26,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+// MINIMALIST BOTTOM NAV
+Widget _buildBottomNav() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 18, right: 18, bottom: 16),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(28),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 25, sigmaY: 25),
+        child: Container(
+          height: 52,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.37), 
+            borderRadius: BorderRadius.circular(28),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.45),
+              width: 0.8,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.00),
+                blurRadius: 0,
+                offset: const Offset(0, 12),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildPremiumNavItem(
+                Icons.home_rounded,
+                _currentIndex == 0,
+                0,
+              ),
+              _buildPremiumNavItem(
+                Icons.auto_awesome, 
+                _currentIndex == 1,
+                1,
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildPremiumNavItem(
+  IconData icon,
+  bool isActive,
+  int index,
+) {
+  bool isHovered = false;
+
+  return StatefulBuilder(
+    builder: (context, setNavState) {
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setNavState(() => isHovered = true),
+        onExit: (_) => setNavState(() => isHovered = false),
+        child: GestureDetector(
+          onTap: () {
+            if (index == 0) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const HomePage()),
+              );
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const AiPage()),
+              );
+            }
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            padding: const EdgeInsets.all(8), 
+            decoration: BoxDecoration(
+              color: isActive
+                  ? _brandBlue.withOpacity(0.22)
+                  : isHovered
+                      ? Colors.white.withOpacity(0.12)
+                      : Colors.transparent,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: AnimatedScale(
+              duration: const Duration(milliseconds: 150),
+              scale: isActive ? 1.08 : 1.0,
+              child: Icon(
+                icon,
+                size: 22, // reduced for 52px bar
+                color: isActive
+                    ? _brandBlue
+                    : isHovered
+                        ? Colors.black87
+                        : Colors.black38,
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}

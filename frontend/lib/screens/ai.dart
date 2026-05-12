@@ -1,7 +1,7 @@
-// ignore_for_file: unused_field, prefer_const_constructors, prefer_final_fields, file_names, deprecated_member_use, unnecessary_import
+// ignore_for_file: unnecessary_const, unnecessary_to_list_in_spreads, unused_field, prefer_const_constructors, prefer_final_fields, file_names, deprecated_member_use, unnecessary_import
 
 import 'dart:ui';
-import '../secrets.dart';
+import '../secret.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'home.dart';
@@ -170,90 +170,117 @@ class _AiPageState extends State<AiPage> {
     );
   }
 
-  Widget _buildInnerPageBackground() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
-        color: Color(0xFFF8FAFF),
-        gradient: RadialGradient(
-          center: Alignment(0.8, -0.5),
-          radius: 1.5,
-          colors: [
-            Color(0xFFF3E8FF),
-            Color(0xFFFDFBFF),
-            Color(0xFFE8F0FF)
-          ],
-        ),
+Widget _buildInnerPageBackground() {
+  return Container(
+    width: double.infinity,
+    height: double.infinity,
+    decoration: const BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          Color(0xFFD6E4FF),
+          Color(0xFFF0E5FF),
+          Color(0xFFE8F0FF),
+        ],
       ),
-    );
-  }
+    ),
+    child: Stack(
+      children: [
+        Positioned(
+          top: -80,
+          right: -60,
+          child: _blurCircle(const Color(0xFF6EA8FF).withOpacity(0.25)),
+        ),
+        Positioned(
+          bottom: -100,
+          left: -80,
+          child: _blurCircle(const Color(0xFFFFC6FF).withOpacity(0.25)),
+        ),
+        Positioned(
+          top: 200,
+          left: 120,
+          child: _blurCircle(const Color(0xFFB6E0FF).withOpacity(0.18)),
+        ),
+      ],
+    ),
+  );
+}
+Widget _blurCircle(Color color) {
+  return Container(
+    width: 180,
+    height: 180,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: color,
+      boxShadow: [
+        BoxShadow(
+          color: color,
+          blurRadius: 80,
+          spreadRadius: 20,
+        ),
+      ],
+    ),
+  );
+}
+Widget _buildChatInterface() {
+  return SafeArea(
+    child: Column(
+      children: [
+        const SizedBox(height: 80),
 
-  Widget _buildChatInterface() {
-    return SafeArea(
-      child: Column(
-        children: [
-          const SizedBox(height: 80),
-
-          Container(
-            height: 190,
-            width: 190,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: ClipOval(
-              child: Image.network(
-                "https://res.cloudinary.com/dw4mv7p40/image/upload/fl_animated/blob_final_vsfnto.gif", //https://res.cloudinary.com/dw4mv7p40/image/upload/v1778572104/blob_final_vsfnto.gif
-                fit: BoxFit.cover,
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            children: [
+              Container(
+                height: 190,
+                width: 190,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: ClipOval(
+                  child: Image.network(
+                    "https://res.cloudinary.com/dw4mv7p40/image/upload/v1778604549/finallllllll_ywnih3.gif",
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-          ),
 
-          const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                final msg = _messages[index];
-
+              ..._messages.map((msg) {
                 return _buildChatBubble(
                   msg['content']!,
                   msg['role'] == 'ai',
                 );
-              },
-            ),
-          ),
+              }).toList(),
 
-          if (_isTyping)
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                bottom: 10,
-              ),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Usra AI is typing...",
-                  style: TextStyle(
-                    color: Colors.black45,
-                    fontSize: 12,
+              if (_isTyping)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Text(
+                      "Usra AI is typing...",
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
 
-          _buildTextInputField(),
+              const SizedBox(height: 120),
+            ],
+          ),
+        ),
 
-          const SizedBox(height: 110),
-        ],
-      ),
-    );
-  }
+        _buildTextInputField(),
+
+        const SizedBox(height: 110),
+      ],
+    ),
+  );
+}
 
   Widget _buildChatBubble(String text, bool isAi) {
     return Align(
@@ -378,102 +405,96 @@ class _AiPageState extends State<AiPage> {
     );
   }
 
-  Widget _buildHeader() {
-    return Positioned(
-      top: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
+Widget _buildHeader() {
+  return Positioned(
+    top: 0,
+    left: 0,
+    right: 0,
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 12,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: SafeArea(
+        bottom: false,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: IconButton(
+                  icon: Icon(Icons.menu_rounded, color: _brandBlue, size: 28),
+                  onPressed: () => setState(() => _isSidebarOpen = true),
+                ),
+              ),
+            ),
+
+            ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [
+                  _brandBlue,
+                  const Color(0xFF6EA8FF),
+                ],
+              ).createShader(bounds),
+              child: const Text(
+                "USRA AI",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 3,
+                  fontFamily: "Tenor Sans",
+                ),
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                icon: Icon(Icons.settings,
+                    color: _brandBlue, size: 26),
+                onPressed: () {},
+              ),
             ),
           ],
         ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 10,
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
-            children: [
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.menu_rounded,
-                    color: _brandBlue,
-                    size: 28,
-                  ),
-                  onPressed: () =>
-                      setState(() => _isSidebarOpen = true),
-                ),
-              ),
+      ),
+    ),
+  );
+}
 
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color:
-                            _brandBlue.withOpacity(0.1),
-                      ),
-                    ),
-                    child: Icon(
-                      Icons.share_outlined,
-                      color: _brandBlue,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    "Usra أسرة",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: _brandBlue,
-                    ),
-                  ),
-                ],
+Widget _buildBottomNav() {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(30),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18), 
+        child: Container(
+          height: 75,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.45), 
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.25), 
+              width: 1,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 25,
+                offset: const Offset(0, 10),
               ),
-
-              const SizedBox(width: 48),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomNav() {
-    return Container(
-      height: 75,
-      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 25),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.85),
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 20,
-          )
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -493,8 +514,9 @@ class _AiPageState extends State<AiPage> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildPremiumNavItem(
     IconData icon,
@@ -519,6 +541,13 @@ class _AiPageState extends State<AiPage> {
                   context,
                   MaterialPageRoute(
                     builder: (_) => const HomePage(),
+                  ),
+                );
+              } else if (index == 1) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AiPage(),
                   ),
                 );
               }
@@ -572,198 +601,160 @@ class _AiPageState extends State<AiPage> {
     );
   }
 
-  Widget _buildAestheticSidebar() {
-    return Container(
-      width: 290,
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.94),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(30),
-          bottomRight: Radius.circular(30),
-        ),
+Widget _buildAestheticSidebar() {
+  return Container(
+    width: 300,
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.92),
+      borderRadius: const BorderRadius.only(
+        topRight: Radius.circular(32),
+        bottomRight: Radius.circular(32),
       ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+    ),
+    child: Column(
+      children: [
+        _buildSidebarHeaderV2(),
+        Expanded(child: _buildSidebarListV2()),
+        _buildSignOutButton(),
+      ],
+    ),
+  );
+}
+
+Widget _buildSidebarHeaderV2() {
+  return Container(
+    padding: const EdgeInsets.fromLTRB(22, 55, 22, 30),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              height: 52,
+              width: 52,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 12, 12, 12),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(
+                Icons.blur_on_rounded,
+                color: Colors.white,
+                size: 30,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "USRA",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.2,
+                    color: const Color.fromARGB(255, 12, 12, 12),
+                  ),
+                ),
+                Text(
+                  "عُسرة",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-          child: Column(
+
+        const SizedBox(height: 18),
+
+        Text(
+          "Family OS Dashboard",
+          style: TextStyle(
+            fontSize: 13,
+            color: Colors.black54,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+Widget _buildSidebarListV2() {
+  return Column(
+    children: [
+      _sidebarTileV2(Icons.auto_awesome_rounded, "AI Assistant", false),
+      _sidebarTileV2(Icons.calendar_month_rounded, "Calendar", true),
+      _sidebarTileV2(Icons.forum_rounded, "Family Chat", false),
+
+
+      _sidebarTileV2(Icons.health_and_safety_rounded, "Health Hub", false),
+      _sidebarTileV2(Icons.paid_rounded, "Finance", false),
+      _sidebarTileV2(Icons.child_care_rounded, "Kids", false),
+      _sidebarTileV2(Icons.elderly_rounded, "Elder Care", false),
+
+      const SizedBox(height: 10),
+      Divider(color: Colors.black12),
+
+      _sidebarTileV2(Icons.verified_user_rounded, "Safety", false),
+    ],
+  );
+}
+Widget _sidebarTileV2(
+  IconData icon,
+  String title,
+  bool isSelected,
+) {
+  bool isHovered = false;
+
+  return StatefulBuilder(
+    builder: (context, setState) {
+      return MouseRegion(
+        onEnter: (_) => setState(() => isHovered = true),
+        onExit: (_) => setState(() => isHovered = false),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? Colors.black.withOpacity(0.06)
+                : isHovered
+                    ? Colors.black.withOpacity(0.04)
+                    : Colors.transparent,
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: Row(
             children: [
-              _buildSidebarHeader(),
-              Expanded(child: _buildSidebarList()),
-              _buildSignOutButton(),
+              Icon(
+                icon,
+                size: 20,
+                color: isSelected
+                    ? Colors.black
+                    : Colors.black54,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: isSelected
+                      ? FontWeight.w800
+                      : FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
             ],
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 
-  Widget _buildSidebarHeader() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(
-        24,
-        65,
-        24,
-        30,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  _brandBlue,
-                  const Color(0xFF5A8DFF)
-                ],
-              ),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Icon(
-              Icons.blur_on_rounded,
-              color: Colors.white,
-              size: 36,
-            ),
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            "USRA",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 2.8,
-              color: Color(0xFF1A1A1A),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildSidebarList() {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      children: [
-        _sidebarTile(
-          Icons.auto_awesome_rounded,
-          "AI Assistant",
-          true,
-        ),
-        _sidebarTile(
-          Icons.verified_user_rounded,
-          "Safety",
-          false,
-        ),
-        _sidebarTile(
-          Icons.forum_rounded,
-          "Family Chat",
-          false,
-        ),
-        _sidebarTile(
-          Icons.calendar_month_rounded,
-          "Calendar",
-          false,
-        ),
-        _sidebarTile(
-          Icons.paid_rounded,
-          "Finance",
-          false,
-        ),
-        _sidebarTile(
-          Icons.child_care_rounded,
-          "Kids & Education",
-          false,
-        ),
-        _sidebarTile(
-          Icons.elderly_rounded,
-          "Elder Care Hub",
-          false,
-        ),
-        _sidebarTile(
-          Icons.health_and_safety_rounded,
-          "Health Hub",
-          false,
-        ),
-        _sidebarTile(
-          Icons.spa_rounded,
-          "Wellbeing",
-          false,
-        ),
-      ],
-    );
-  }
-
-  Widget _sidebarTile(
-    IconData icon,
-    String title,
-    bool isSelected,
-  ) {
-    bool isHovered = false;
-
-    return StatefulBuilder(
-      builder: (context, setTileState) {
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (_) =>
-              setTileState(() => isHovered = true),
-          onExit: (_) =>
-              setTileState(() => isHovered = false),
-          child: GestureDetector(
-            onTap: () {
-              if (title == "Home") {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const HomePage(),
-                  ),
-                );
-              }
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              margin: const EdgeInsets.only(bottom: 6),
-              decoration: BoxDecoration(
-                color: isHovered
-                    ? Colors.white
-                    : (isSelected
-                        ? _brandBlue.withOpacity(0.06)
-                        : Colors.transparent),
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: ListTile(
-                dense: true,
-                leading: Icon(
-                  icon,
-                  color: isHovered || isSelected
-                      ? _brandBlue
-                      : Colors.black54,
-                  size: 22,
-                ),
-                title: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: isHovered || isSelected
-                        ? FontWeight.w800
-                        : FontWeight.w600,
-                    color: isHovered || isSelected
-                        ? _brandBlue
-                        : Colors.black87,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
   Widget _buildSignOutButton() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(
@@ -778,7 +769,7 @@ class _AiPageState extends State<AiPage> {
           vertical: 16,
         ),
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: const Color.fromARGB(255, 12, 12, 12),
           borderRadius: BorderRadius.circular(18),
         ),
         child: const Row(

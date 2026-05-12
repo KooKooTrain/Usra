@@ -1,18 +1,18 @@
-// ignore_for_file: dead_code, prefer_final_fields, deprecated_member_use
+// ignore_for_file: prefer_final_fields, deprecated_member_use
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'AI.dart';
 
-class Chat extends StatefulWidget {
-  const Chat({super.key});
+class Finance extends StatefulWidget {
+  const Finance({super.key});
 
   @override
-  State<Chat> createState() => _ChatPageState();
+  State<Finance> createState() => _FinanceState();
 }
 
-class _ChatPageState extends State<Chat> {
+class _FinanceState extends State<Finance> {
   bool _isSidebarOpen = false;
   int _currentIndex = 2;
 
@@ -68,7 +68,7 @@ class _ChatPageState extends State<Chat> {
             _buildInnerBackground(),
 
             // YOUR PAGE CONTENT HERE
-            _buildChatContent(),
+            _buildFinanceContent(),
 
             // HEADER
             _buildHeader(),
@@ -106,6 +106,379 @@ class _ChatPageState extends State<Chat> {
       ),
     );
   }
+
+  Widget _buildFinanceContent() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.only(
+          top: 70,
+          bottom: 120,
+          left: 20,
+          right: 20,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildBalanceCard(),
+            const SizedBox(height: 25),
+
+            _buildGoalTracker(),
+            const SizedBox(height: 25),
+
+            _buildAIAdvisor(),
+            const SizedBox(height: 25),
+
+            const Text(
+              "Kids Allowance",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 15),
+
+            _buildKidRow(
+              "Divya",
+              "85.50 AED",
+              "Level 12 • Budget Maven",
+              0.7,
+              Colors.blue,
+            ),
+            _buildKidRow(
+              "Yash",
+              "42.50 AED",
+              "Level 8 • Savvy Saver",
+              0.4,
+              Colors.blueAccent,
+            ),
+
+            const SizedBox(height: 25),
+
+            _buildRecentTransactions(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // --- UI Sections ---
+
+  Widget _buildBalanceCard() {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8F1FF).withOpacity(0.85),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+      child: Column(
+        children: [
+          const Text("SHARED BUDGET BALANCE", style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          const Text("\$4,280.00", style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Color(0xFF1A46BB))),
+          const Text("▲ +12.4% from last month", style: TextStyle(color: Colors.green, fontSize: 13)),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(child: _buildActionBtn(Icons.add, "Add Funds", isPrimary: false)),
+              const SizedBox(width: 15),
+              Expanded(child: _buildActionBtn(Icons.article, "View Report", isPrimary: true)),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGoalTracker() {
+    return Column(
+      children: [
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Goal Tracker", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text("See All", style: TextStyle(color: Colors.blueAccent)),
+          ],
+        ),
+        const SizedBox(height: 15),
+        _buildGoalItem("Summer Vacation", "\$3,200 / \$4,000", 0.75, Icons.beach_access),
+        const SizedBox(height: 12),
+        _buildGoalItem("EV Fund", "\$20,000 / \$50,000", 0.40, Icons.directions_car),
+      ],
+    );
+  }
+
+  Widget _buildAIAdvisor() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8F1FF).withOpacity(0.55),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Row(
+            children: [
+              Icon(Icons.auto_awesome, color: Color(0xFF2D62ED), size: 18),
+              SizedBox(width: 8),
+              Text("AI ADVISOR", style: TextStyle(color: Color(0xFF2D62ED), fontWeight: FontWeight.bold, fontSize: 12)),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Text("Optimization Found", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          const SizedBox(height: 8),
+          const Text(
+            "Buying your grocery from 'Noon Minutes' could save the family \$45/month based on Maya's recent spending patterns.",
+            style: TextStyle(color: Colors.black54, fontSize: 13),
+          ),
+          const SizedBox(height: 15),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.blueAccent,
+                elevation: 0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+              child: const Text("Apply Optimization"),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentTransactions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("Recent Transactions", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 15),
+        _buildTransactionItem("Whole Foods Market", "-\$142.10", "Family Groceries • 2 hours ago", Icons.shopping_cart, Colors.purple[100]!),
+        _buildTransactionItem("Tesla Supercharger", "-\$18.50", "Shared EV • Today, 10:15 AM", Icons.electric_bolt, Colors.blue[100]!),
+      ],
+    );
+  }
+
+  // --- Helper Widgets ---
+
+Widget _buildActionBtn(
+  IconData icon,
+  String label, {
+  required bool isPrimary,
+}) {
+  return GestureDetector(
+    onTap: () {
+      if (label == "View Report") {
+        _showFinanceReportPopup();
+      }
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: isPrimary
+            ? const Color(0xFF1A46BB)
+            : const Color(0xFFF0F4FF),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 18,
+            color: isPrimary ? Colors.white : Colors.blueAccent,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: TextStyle(
+              color: isPrimary ? Colors.white : Colors.blueAccent,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+void _showFinanceReportPopup() {
+  showDialog(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.4),
+    builder: (context) {
+      return Center(
+        child: Material(
+          color: Colors.transparent,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+              child: Container(
+                width: 305,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.25),
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(
+                    color: Colors.white.withOpacity(0.3),
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    // CLOSE BUTTON
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.55),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            size: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    const Padding(
+                      padding: EdgeInsets.only(top: 30),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Financial Report",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 15),
+
+                          Text("💰 Total Spend: \$1,240"),
+                          SizedBox(height: 6),
+                          Text("📈 Savings: \$320"),
+                          SizedBox(height: 6),
+                          Text("🛒 Top Category: Groceries"),
+                          SizedBox(height: 6),
+                          Text("📊 Monthly Trend: +12.4%"),
+                          SizedBox(height: 15),
+
+                          Text(
+                            "AI Insight: You can save 12% by reducing dining expenses.",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+  Widget _buildGoalItem(String title, String amount, double progress, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+      child: Row(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              CircularProgressIndicator(value: progress, backgroundColor: Colors.grey[200], strokeWidth: 5),
+              Text("${(progress * 100).toInt()}%", style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+            ],
+          ),
+          const SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text(amount, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Icon(icon, size: 14, color: Colors.grey),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildKidRow(String name, String balance, String sub, double progress, Color color) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(color: Colors.white.withOpacity(0.7), borderRadius: BorderRadius.circular(20)),
+      child: Row(
+        children: [
+          const CircleAvatar(radius: 25, backgroundColor: Colors.grey),
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(balance, style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF1A46BB))),
+                  ],
+                ),
+                Text(sub, style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                const SizedBox(height: 5),
+                LinearProgressIndicator(value: progress, color: color, backgroundColor: Colors.grey[200]),
+              ],
+            ),
+          ),
+          const Icon(Icons.send, color: Colors.blueAccent, size: 18),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTransactionItem(String title, String price, String sub, IconData icon, Color bg) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8F1FF).withOpacity(0.85),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.3),
+        ),
+      ),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        leading: CircleAvatar(backgroundColor: bg, child: Icon(icon, color: Colors.white)),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        subtitle: Text(sub, style: const TextStyle(fontSize: 11)),
+        trailing: Text(price, style: const TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+
+
+
 
 Widget _buildInnerBackground() {
   return TweenAnimationBuilder<double>(
@@ -239,251 +612,6 @@ Widget _glowBlob(Color color, {
     ),
   );
 }
-
-
-Widget _buildChatContent() {
-  return SafeArea(
-    child: ListView(
-      padding: const EdgeInsets.only(
-        top: 60,
-        left: 20,
-        right: 20,
-        bottom: 110,
-      ),
-      children: [
-        const Text(
-          "Family Chat",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-
-        const SizedBox(height: 8),
-
-        const Text(
-          "Stay connected with your family.",
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black54,
-          ),
-        ),
-
-        const SizedBox(height: 24),
-
-        _buildChatTile(
-          "Mom",
-          "Did everyone eat lunch?",
-          "2m ago",
-          true,
-        ),
-
-        _buildChatTile(
-          "Dad",
-          "I'll be home by 7.",
-          "12m ago",
-          false,
-        ),
-
-        _buildChatTile(
-          "Aisha",
-          "Can someone pick me up?",
-          "25m ago",
-          true,
-        ),
-
-        _buildChatTile(
-          "Family Group",
-          "Movie night today 🍿",
-          "1h ago",
-          false,
-        ),
-
-        _buildChatTile(
-          "Grandma",
-          "Good morning dear ❤️",
-          "3h ago",
-          false,
-        ),
-
-        _buildChatTile(
-          "Omar",
-          "Sent the notes.",
-          "5h ago",
-          false,
-        ),
-      ],
-    ),
-  );
-}
-
-
-
-Widget _buildChatTile(
-  String name,
-  String message,
-  String time,
-  bool unread,
-) {
-  return StatefulBuilder(
-    builder: (context, setHover) {
-      bool hovered = false;
-
-      return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => setHover(() => hovered = true),
-        onExit: (_) => setHover(() => hovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 220),
-          transform: Matrix4.translationValues(
-            0,
-            hovered ? -3 : 0,
-            0,
-          ),
-          margin: const EdgeInsets.only(bottom: 16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(28),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 16,
-                sigmaY: 16,
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.38),
-                  borderRadius: BorderRadius.circular(28),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.32),
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(
-                        hovered ? 0.08 : 0.04,
-                      ),
-                      blurRadius: hovered ? 28 : 16,
-                      offset: const Offset(0, 10),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 58,
-                      height: 58,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            _brandBlue.withOpacity(0.9),
-                            const Color(0xFF7C6CFF),
-                          ],
-                        ),
-                        borderRadius:
-                            BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color:
-                                _brandBlue.withOpacity(0.3),
-                            blurRadius: 18,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Text(
-                          name[0],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(width: 16),
-
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  name,
-                                  style:
-                                      const TextStyle(
-                                    fontWeight:
-                                        FontWeight.w800,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-
-                              Text(
-                                time,
-                                style:
-                                    const TextStyle(
-                                  color:
-                                      Colors.black45,
-                                  fontSize: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 6),
-
-                          Text(
-                            message,
-                            style: const TextStyle(
-                              color: Colors.black54,
-                              fontSize: 13,
-                              height: 1.4,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    const SizedBox(width: 10),
-
-                    if (unread)
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              _brandBlue,
-                              const Color(0xFF7C6CFF),
-                            ],
-                          ),
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color:
-                                  _brandBlue.withOpacity(
-                                0.45,
-                              ),
-                              blurRadius: 12,
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
 
 Widget _buildHeader() {
   return Stack(

@@ -1,1 +1,0 @@
-const String api = "AIzaSyCUlo7F8-KHnrdFU2KmsynquUoXGXb_vDY";
