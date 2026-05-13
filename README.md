@@ -9,7 +9,7 @@ The app was built around genuine day-to-day concerns faced by families, focusing
 ---
 
 ## IMPORTANT LINKS
-Prototype Link : https://kookootrain.github.io/Usra/ 
+Prototype Link : https://kookootrain.github.io/Usra/ [Click to view working Prototype]
 
 Figma UI Link : [Click Here](https://www.figma.com/design/qk2tTvaIkInWcA6ggUTZPp/Usra?node-id=48-1423&t=BeUn84lPpHBZrz4w-1)
 
