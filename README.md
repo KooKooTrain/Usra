@@ -4,16 +4,15 @@ Usra (أسرة) quite literally means *family* in Arabic, and thats exactly what
 
 Usra is a modern family management and wellbeing application designed to solve **real-world family challenges** through technology, communication, safety, and organization.
 
-The app was built around genuine day-to-day concerns faced by families, focusing on improving coordination, safety, healthcare management, and connected living through one unified platform.
+The app was built around genuine day-to-day concerns faced by families [Refer to images below], focusing on improving coordination, safety, healthcare management, and connected living through one unified platform.
 
 ---
 
 ## IMPORTANT LINKS
-Prototype Link : https://kookootrain.github.io/Usra/ [Click to view working Prototype - Go to Sign In page to enter]
+Prototype Link : https://kookootrain.github.io/Usra/ [Click to view working Prototype]
 
 Figma UI Link : [Click Here](https://www.figma.com/design/qk2tTvaIkInWcA6ggUTZPp/Usra?node-id=48-1423&t=BeUn84lPpHBZrz4w-1)
 
-Youtube Video : [Usra App Showcase]()
 
 ---
 
@@ -34,17 +33,19 @@ The features and modules inside Usra were carefully planned around practical use
 
 ![alt shared calenders](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778649406/d2774f0e-d43d-4cb8-856c-3f9ad72d77a9.png)
 ![alt shared calenders](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778649519/b1695d2b-29e0-4d36-9ab9-6bbf7612853e.png)
+![survery](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778691723/20f496ee-6202-4f15-ba0b-0bffacd88b1d.png)
 
 
 ---
 
-# Technology Stack
+# Technology + AI Stack 
 
 - Flutter
 - Node.js
 - Gemini API
 - Git
 - Visual Studio Code
+- Claude & Gemini AI 
 
 ---
 
@@ -58,7 +59,7 @@ A real-time family safety system that allows members to:
 - Share live location updates
 - Trigger emergency alerts
 - Notify trusted family members during danger or emergencies
-
+- Emergency numbers contacted in case of any SOS Signal
 ---
 
 ## 2. Shared Calendar
@@ -68,6 +69,7 @@ A collaborative family calendar designed to improve organization and planning by
 - Event reminders
 - Appointment tracking
 - Family activity planning
+- Automatic display of important occasions and cultural events such as Ramadan, Eid, etc.
 
 ---
 
@@ -122,8 +124,9 @@ A support system designed for elderly family members:
 # Usra AI
 
 Usra AI is powered using the Gemini API.
-
 The AI assistant helps users with:
+- Meal Plans according to medical history
+- health-related suggestions
 - Daily planning
 - Smart recommendations
 - Family organization
@@ -168,3 +171,4 @@ The goal is to simplify family life while strengthening coordination, awareness,
 
 Bright Riders School, Abu Dhabi
 [Grade 12]
+ 
