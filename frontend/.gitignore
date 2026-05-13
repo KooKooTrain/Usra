@@ -50,3 +50,9 @@ frontend/assets/shush
 assets/shush
 .env
 assets/.env
+
+build/
+frontend/build/
+node_modules/
+.env
+assets/.env
