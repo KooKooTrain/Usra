@@ -136,6 +136,7 @@ The AI assistant helps users with:
 
 ![Calender](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778653229/ac154c89-e2cc-4df2-8d6e-01df571146d9.png)
 ![AI](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778653780/e91836b8-9754-4a6d-9c79-cd7c1c4b33fe.png)
+![After Effects](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778656501/5927edb2-e886-41ae-9acb-9372141b565f_bnqbyh.jpg)
 
 ---
 
