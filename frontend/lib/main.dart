@@ -7,7 +7,7 @@ import 'screens/signup.dart';
 import 'screens/home.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "assets/shush");
   runApp(const Usra());
 }
 

@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -53,7 +54,11 @@ class _SignupPageState extends State<SignupPage> {
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [Color(0xFFD6E4FF), Color(0xFFF0E5FF), Color(0xFFE8F0FF)],
+                          colors: [
+                            Color(0xFFD6E4FF),
+                            Color(0xFFF0E5FF),
+                            Color(0xFFE8F0FF)
+                          ],
                         ),
                       ),
                     ),
@@ -64,7 +69,8 @@ class _SignupPageState extends State<SignupPage> {
                           const SizedBox(height: 12),
                           Center(
                             child: Container(
-                              width: 60, height: 5,
+                              width: 60,
+                              height: 5,
                               decoration: BoxDecoration(
                                 color: Colors.black.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10),
@@ -72,7 +78,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          
+
                           // Logo and Title matching Login Page
                           Center(
                             child: Container(
@@ -80,18 +86,23 @@ class _SignupPageState extends State<SignupPage> {
                               decoration: BoxDecoration(
                                 color: Colors.white.withOpacity(0.4),
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white.withOpacity(0.5)),
+                                border: Border.all(
+                                    color: Colors.white.withOpacity(0.5)),
                               ),
-                              child: const Icon(Icons.share_outlined, size: 28, color: Color(0xFF0056D2)),
+                              child: const Icon(Icons.share_outlined,
+                                  size: 28, color: Color(0xFF0056D2)),
                             ),
                           ),
                           const SizedBox(height: 10),
                           const Text(
                             "Usra أسرة",
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color(0xFF0056D2)),
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0056D2)),
                           ),
                           const SizedBox(height: 20),
-                          
+
                           ClipRRect(
                             borderRadius: BorderRadius.circular(35),
                             child: BackdropFilter(
@@ -101,24 +112,30 @@ class _SignupPageState extends State<SignupPage> {
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.3),
                                   borderRadius: BorderRadius.circular(35),
-                                  border: Border.all(color: Colors.white.withOpacity(0.3)),
+                                  border: Border.all(
+                                      color: Colors.white.withOpacity(0.3)),
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     _buildInputLabel("Full Name"),
-                                    _buildTextField(hint: "Divya Bhosale", icon: Icons.person_outline),
+                                    _buildTextField(
+                                        hint: "Divya Bhosale",
+                                        icon: Icons.person_outline),
                                     const SizedBox(height: 15),
-                                    
                                     Row(
                                       children: [
                                         Expanded(
                                           flex: 2,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               _buildInputLabel("DOB"),
-                                              _buildTextField(hint: "DD/MM/YY", icon: Icons.calendar_today_outlined),
+                                              _buildTextField(
+                                                  hint: "DD/MM/YY",
+                                                  icon: Icons
+                                                      .calendar_today_outlined),
                                             ],
                                           ),
                                         ),
@@ -126,41 +143,50 @@ class _SignupPageState extends State<SignupPage> {
                                         Expanded(
                                           flex: 3,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               _buildInputLabel("Partner Name"),
-                                              _buildTextField(hint: "Optional", icon: Icons.favorite_outline),
+                                              _buildTextField(
+                                                  hint: "Optional",
+                                                  icon: Icons.favorite_outline),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
                                     const SizedBox(height: 15),
-                                    
                                     _buildInputLabel("Email Address"),
-                                    _buildTextField(hint: "name@mail.com", icon: Icons.email_outlined),
+                                    _buildTextField(
+                                        hint: "name@mail.com",
+                                        icon: Icons.email_outlined),
                                     const SizedBox(height: 20),
-
-                                    const Text("Family Composition", style: TextStyle(color: Color(0xFF0056D2), fontWeight: FontWeight.bold, fontSize: 14)),
+                                    const Text("Family Composition",
+                                        style: TextStyle(
+                                            color: Color(0xFF0056D2),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14)),
                                     const SizedBox(height: 12),
-                                    
-                                    _buildCounterRow("How many Elders?", Icons.elderly_outlined),
+                                    _buildCounterRow("How many Elders?",
+                                        Icons.elderly_outlined),
                                     const SizedBox(height: 10),
-                                    _buildCounterRow("How many Children?", Icons.child_care_outlined),
-                                    
+                                    _buildCounterRow("How many Children?",
+                                        Icons.child_care_outlined),
                                     const SizedBox(height: 20),
                                     _buildInputLabel("Password"),
-                                    _buildTextField(hint: "••••••••", icon: Icons.lock_outline, isPassword: true),
-                                    
+                                    _buildTextField(
+                                        hint: "••••••••",
+                                        icon: Icons.lock_outline,
+                                        isPassword: true),
                                     const SizedBox(height: 25),
                                     _buildSignUpButton(),
                                     const SizedBox(height: 15),
-                                    
                                     Center(
                                       child: MouseRegion(
                                         cursor: SystemMouseCursors.click,
                                         child: GestureDetector(
-                                          onTap: () => Navigator.pushNamed(context, '/login'),
+                                          onTap: () => Navigator.pushNamed(
+                                              context, '/login'),
                                           child: RichText(
                                             text: const TextSpan(
                                               text: "Already have an account? ",
@@ -202,14 +228,21 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Widget _buildInputLabel(String label) => Padding(
-    padding: const EdgeInsets.only(left: 4, bottom: 4),
-    child: Text(label, style: const TextStyle(color: Colors.black87, fontSize: 12, fontWeight: FontWeight.w600)),
-  );
+        padding: const EdgeInsets.only(left: 4, bottom: 4),
+        child: Text(label,
+            style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 12,
+                fontWeight: FontWeight.w600)),
+      );
 
-  Widget _buildTextField({required String hint, required IconData icon, bool isPassword = false}) {
+  Widget _buildTextField(
+      {required String hint, required IconData icon, bool isPassword = false}) {
     return Container(
       height: 42,
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.5), borderRadius: BorderRadius.circular(18)),
+      decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(18)),
       child: TextField(
         obscureText: isPassword && !_isPasswordVisible,
         style: const TextStyle(fontSize: 13),
@@ -217,10 +250,18 @@ class _SignupPageState extends State<SignupPage> {
           hintText: hint,
           hintStyle: const TextStyle(fontSize: 12, color: Colors.black26),
           prefixIcon: Icon(icon, color: Colors.black38, size: 16),
-          suffixIcon: isPassword ? IconButton(
-            icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_outlined, color: Colors.black38, size: 16),
-            onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
-          ) : null,
+          suffixIcon: isPassword
+              ? IconButton(
+                  icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_outlined,
+                      color: Colors.black38,
+                      size: 16),
+                  onPressed: () =>
+                      setState(() => _isPasswordVisible = !_isPasswordVisible),
+                )
+              : null,
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(vertical: 10),
         ),
@@ -233,16 +274,21 @@ class _SignupPageState extends State<SignupPage> {
       children: [
         Icon(icon, size: 18, color: Colors.black38),
         const SizedBox(width: 8),
-        Expanded(child: Text(label, style: const TextStyle(fontSize: 12, color: Colors.black87))),
+        Expanded(
+            child: Text(label,
+                style: const TextStyle(fontSize: 12, color: Colors.black87))),
         Container(
           width: 60,
           height: 32,
-          decoration: BoxDecoration(color: Colors.white.withOpacity(0.4), borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(10)),
           child: const TextField(
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
-            decoration: InputDecoration(hintText: "0", border: InputBorder.none),
+            decoration:
+                InputDecoration(hintText: "0", border: InputBorder.none),
           ),
         ),
       ],
@@ -251,17 +297,30 @@ class _SignupPageState extends State<SignupPage> {
 
   Widget _buildSignUpButton() {
     return Container(
-      width: double.infinity, height: 48,
+      width: double.infinity,
+      height: 48,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(colors: [Color(0xFF005DC7), Color(0xFF1E88E5)]),
+        gradient: const LinearGradient(
+            colors: [Color(0xFF005DC7), Color(0xFF1E88E5)]),
       ),
       child: ElevatedButton(
         onPressed: () {
-          // Logic for account creation
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
         },
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24))),
-        child: const Text("Create Account", style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold)),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24))),
+        child: const Text("Create Account",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 15,
+                fontWeight: FontWeight.bold)),
       ),
     );
   }

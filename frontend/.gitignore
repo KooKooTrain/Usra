@@ -45,3 +45,8 @@ app.*.map.json
 /android/app/release
 
 /web/lib/widgets/secrets.dart
+
+frontend/assets/shush
+assets/shush
+.env
+assets/.env
