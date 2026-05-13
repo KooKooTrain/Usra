@@ -2,8 +2,15 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'ai.dart';
+import 'safety.dart';
+import 'chat.dart';
+import 'calender.dart';
+import 'elder.dart';
+import 'login.dart';
+import 'finance.dart';
+import 'health.dart';
 import 'home.dart';
-import 'AI.dart';
 
 class Kids extends StatefulWidget {
   const Kids({super.key});
@@ -375,9 +382,9 @@ Widget _bar(double value, String label) {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
-      child: Row(
+      child: const Row(
         mainAxisSize: MainAxisSize.min,
-        children: const [
+        children: [
           Icon(Icons.stars, color: Colors.amber, size: 18),
           SizedBox(width: 5),
           Text("1,240 Gems",
@@ -420,9 +427,9 @@ Widget _bar(double value, String label) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text("SCREEN TIME",
                   style: TextStyle(
                       fontSize: 10,
@@ -836,36 +843,52 @@ Widget _buildMilestoneItem(
     );
   }
 
-  Widget _buildSidebarListV2() {
-    return Column(
-      children: [
-        _sidebarTileV2(Icons.auto_awesome_rounded, "AI Assistant", false),
-        _sidebarTileV2(Icons.calendar_month_rounded, "Calendar", true),
-        _sidebarTileV2(Icons.forum_rounded, "Family Chat", false),
-        _sidebarTileV2(Icons.health_and_safety_rounded, "Health Hub", false),
-        _sidebarTileV2(Icons.paid_rounded, "Finance", false),
-        _sidebarTileV2(Icons.child_care_rounded, "Kids", false),
-        _sidebarTileV2(Icons.elderly_rounded, "Elder Care", false),
-        const SizedBox(height: 10),
-        const Divider(color: Colors.black12),
-        _sidebarTileV2(Icons.verified_user_rounded, "Safety", false),
-      ],
-    );
-  }
+Widget _buildSidebarListV2() {
+  return Column(
+    children: [
+      _sidebarTileV2(Icons.auto_awesome_rounded, "AI Assistant", false, const AiPage()),
+      _sidebarTileV2(Icons.calendar_month_rounded, "Calendar", false, const Calender()),
+      _sidebarTileV2(Icons.forum_rounded, "Family Chat", false, const Chat()),
 
-  Widget _sidebarTileV2(IconData icon, String title, bool isSelected) {
-    bool isHovered = false;
 
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return MouseRegion(
-          onEnter: (_) => setState(() => isHovered = true),
-          onExit: (_) => setState(() => isHovered = false),
+      _sidebarTileV2(Icons.health_and_safety_rounded, "Health Hub", false, const Health()),
+      _sidebarTileV2(Icons.paid_rounded, "Finance", false, const Finance()),
+      _sidebarTileV2(Icons.child_care_rounded, "Kids", true, const Kids()),
+      _sidebarTileV2(Icons.elderly_rounded, "Elder Care", false, const Elder()),
+
+      const SizedBox(height: 10),
+      const Divider(color: Colors.black12),
+
+      _sidebarTileV2(Icons.verified_user_rounded, "Safety", false, const Safety()),
+    ],
+  );
+}
+Widget _sidebarTileV2(
+  IconData icon,
+  String title,
+  bool isSelected,
+  Widget? page,
+) {
+  bool isHovered = false;
+
+  return StatefulBuilder(
+    builder: (context, setState) {
+      return MouseRegion(
+        onEnter: (_) => setState(() => isHovered = true),
+        onExit: (_) => setState(() => isHovered = false),
+        child: GestureDetector(
+          onTap: () {
+            if (page != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => page),
+              );
+            }
+          },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 180),
             margin: const EdgeInsets.symmetric(vertical: 4),
-            padding:
-                const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
               color: isSelected
                   ? Colors.black.withOpacity(0.06)
@@ -876,30 +899,27 @@ Widget _buildMilestoneItem(
             ),
             child: Row(
               children: [
-                Icon(
-                  icon,
-                  size: 20,
-                  color: isSelected ? Colors.black : Colors.black54,
-                ),
+                Icon(icon,
+                    size: 20,
+                    color: isSelected ? Colors.black : Colors.black54),
                 const SizedBox(width: 12),
                 Text(
                   title,
                   style: TextStyle(
                     fontSize: 14,
-                    fontWeight: isSelected
-                        ? FontWeight.w800
-                        : FontWeight.w500,
+                    fontWeight:
+                        isSelected ? FontWeight.w800 : FontWeight.w500,
                     color: Colors.black87,
                   ),
                 ),
               ],
             ),
           ),
-        );
-      },
-    );
-  }
-
+        ),
+      );
+    },
+  );
+}
   Widget _buildSignOutButton() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 10, 20, 40),

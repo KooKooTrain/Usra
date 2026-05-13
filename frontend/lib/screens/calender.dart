@@ -2,8 +2,15 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'ai.dart';
+import 'safety.dart';
+import 'chat.dart';
 import 'home.dart';
-import 'AI.dart';
+import 'elder.dart';
+import 'login.dart';
+import 'finance.dart';
+import 'health.dart';
+import 'kids.dart';
 
 class Calender extends StatefulWidget {
   const Calender({super.key});
@@ -1151,20 +1158,20 @@ Widget _buildSidebarHeaderV2() {
 Widget _buildSidebarListV2() {
   return Column(
     children: [
-      _sidebarTileV2(Icons.auto_awesome_rounded, "AI Assistant", false),
-      _sidebarTileV2(Icons.calendar_month_rounded, "Calendar", true),
-      _sidebarTileV2(Icons.forum_rounded, "Family Chat", false),
+      _sidebarTileV2(Icons.auto_awesome_rounded, "AI Assistant", false, const AiPage()),
+      _sidebarTileV2(Icons.calendar_month_rounded, "Calendar", true, const Calender()),
+      _sidebarTileV2(Icons.forum_rounded, "Family Chat", false, const Chat()),
 
 
-      _sidebarTileV2(Icons.health_and_safety_rounded, "Health Hub", false),
-      _sidebarTileV2(Icons.paid_rounded, "Finance", false),
-      _sidebarTileV2(Icons.child_care_rounded, "Kids", false),
-      _sidebarTileV2(Icons.elderly_rounded, "Elder Care", false),
+      _sidebarTileV2(Icons.health_and_safety_rounded, "Health Hub", false, const Health()),
+      _sidebarTileV2(Icons.paid_rounded, "Finance", false, const Finance()),
+      _sidebarTileV2(Icons.child_care_rounded, "Kids", false, const Kids()),
+      _sidebarTileV2(Icons.elderly_rounded, "Elder Care", false, const Elder()),
 
       const SizedBox(height: 10),
-      Divider(color: Colors.black12),
+      const Divider(color: Colors.black12),
 
-      _sidebarTileV2(Icons.verified_user_rounded, "Safety", false),
+      _sidebarTileV2(Icons.verified_user_rounded, "Safety", false, const Safety()),
     ],
   );
 }
@@ -1172,6 +1179,7 @@ Widget _sidebarTileV2(
   IconData icon,
   String title,
   bool isSelected,
+  Widget? page,
 ) {
   bool isHovered = false;
 
@@ -1180,39 +1188,44 @@ Widget _sidebarTileV2(
       return MouseRegion(
         onEnter: (_) => setState(() => isHovered = true),
         onExit: (_) => setState(() => isHovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          margin: const EdgeInsets.symmetric(vertical: 4),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected
-                ? Colors.black.withOpacity(0.06)
-                : isHovered
-                    ? Colors.black.withOpacity(0.04)
-                    : Colors.transparent,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 20,
-                color: isSelected
-                    ? Colors.black
-                    : Colors.black54,
-              ),
-              const SizedBox(width: 12),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: isSelected
-                      ? FontWeight.w800
-                      : FontWeight.w500,
-                  color: Colors.black87,
+        child: GestureDetector(
+          onTap: () {
+            if (page != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => page),
+              );
+            }
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            margin: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+            decoration: BoxDecoration(
+              color: isSelected
+                  ? Colors.black.withOpacity(0.06)
+                  : isHovered
+                      ? Colors.black.withOpacity(0.04)
+                      : Colors.transparent,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Row(
+              children: [
+                Icon(icon,
+                    size: 20,
+                    color: isSelected ? Colors.black : Colors.black54),
+                const SizedBox(width: 12),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight:
+                        isSelected ? FontWeight.w800 : FontWeight.w500,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
