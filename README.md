@@ -156,8 +156,11 @@ The goal is to simplify family life while strengthening coordination, awareness,
 # Team Information
 
 **Team Name :** Team Usra
+
 **Team Number :**  309
+
 **Team Code :** IJWTC
+
 **Selected Track :** Cycle 3: Grades 9-12 Students
 
 ---
