@@ -52,7 +52,7 @@ The features and modules inside Usra were carefully planned around practical use
 
 # Core Features
 
-!(Usra AI)[https://res.cloudinary.com/dw4mv7p40/image/upload/v1778692909/38a9fe9a-18fb-43a8-9cb5-1106ce888efd.png]
+![Usra AI](https://res.cloudinary.com/dw4mv7p40/image/upload/v1778692909/38a9fe9a-18fb-43a8-9cb5-1106ce888efd.png)
 
 ## 1. Safety
 
