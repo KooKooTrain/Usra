@@ -9,7 +9,7 @@ The app was built around genuine day-to-day concerns faced by families [Refer to
 ---
 
 ## IMPORTANT LINKS
-Prototype Link : https://kookootrain.github.io/Usra/ [Click to view working Prototype]
+Prototype Link : [https://kookootrain.github.io/Usra/](https://usra-app.netlify.app/) [Click to view working Prototype]
 
 Figma UI Link : [Click Here](https://www.figma.com/design/qk2tTvaIkInWcA6ggUTZPp/Usra?node-id=48-1423&t=BeUn84lPpHBZrz4w-1)
 
@@ -20,7 +20,7 @@ Figma UI Link : [Click Here](https://www.figma.com/design/qk2tTvaIkInWcA6ggUTZPp
 
 Apps offer a more convenient, secure, and personalized experience that leverages **smartphone hardware**, such as GPS for location sharing and push notifications for instant alerts.
 
-Families require fast, real-time accessibility throughout the day, especially during emergencies, travel, scheduling, and communication. A mobile application provides instant notifications, location integration, portability, compared to a traditional website.
+Families require fast, real-time accessibility throughout the day, especially during emergencies, travel, scheduling, and communication. A mobile application provides instant notifications, location integration, portability compared to a traditional website.
 
 **For our prototype, we made a mobile view on web to make it easily accessible for judges without the need of an app emulator or mobile device.**
 
@@ -51,6 +51,8 @@ The features and modules inside Usra were carefully planned around practical use
 
 
 # Core Features
+
+!(Usra AI)[https://res.cloudinary.com/dw4mv7p40/image/upload/v1778692909/38a9fe9a-18fb-43a8-9cb5-1106ce888efd.png]
 
 ## 1. Safety
 
